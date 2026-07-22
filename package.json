@@ -1,0 +1,21 @@
+{
+  "name": "me",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.1.0",
+    "@fontsource-variable/martian-mono": "^5.1.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.14"
+  }
+}

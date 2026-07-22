@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" data-theme="dark" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>Sean Tan — Interface Engineer</title>
+    <meta
+      name="description"
+      content="Sean Tan — engineer and interface designer building software that feels a few years early. Layered, precise, alive."
+    />
+    <meta name="theme-color" content="#080a09" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23080a09'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%2372f08c' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='1.6' fill='%2372f08c'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <!-- Ambient signal field (WebGL, decorative) -->
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Custom cursor (progressive enhancement; hidden for touch / reduced-motion) -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__ring"></div>
+      <div class="cursor__dot"></div>
+      <div class="cursor__label" data-cursor-label></div>
+    </div>
+
+    <!-- Persistent instrument frame -->
+    <div class="hud" aria-hidden="true">
+      <div class="hud__corner hud__corner--tl"></div>
+      <div class="hud__corner hud__corner--tr"></div>
+      <div class="hud__corner hud__corner--bl"></div>
+      <div class="hud__corner hud__corner--br"></div>
+
+      <div class="hud__mark hud__mark--brand">
+        <span class="hud__glyph">◈</span>
+        <span>SEAN&nbsp;TAN</span>
+      </div>
+      <div class="hud__mark hud__mark--status">
+        <span class="hud__live"></span>
+        <span data-hud-clock>--:--:-- UTC</span>
+      </div>
+      <div class="hud__mark hud__mark--section">
+        <span data-hud-index>01</span><span class="hud__dim"> / 04</span>
+        <span class="hud__label" data-hud-section>INDEX</span>
+      </div>
+      <div class="hud__mark hud__mark--coords">
+        <span data-hud-coords>X 000 · Y 000</span>
+      </div>
+      <div class="hud__progress" aria-hidden="true">
+        <span class="hud__progress-bar" data-hud-progress></span>
+      </div>
+    </div>
+
+    <a class="skip" href="#approach">Skip to content</a>
+
+    <main id="app">
+      <!-- ░░ 01 — INDEX ░░ Interaction: cursor-gravity signal field + assembling identity -->
+      <section
+        class="section section--index"
+        id="index"
+        data-section="INDEX"
+        data-index="01"
+      >
+        <div class="index__stage">
+          <p class="index__eyebrow" data-reveal>
+            <span class="index__eyebrow-line"></span>
+            Interface engineer · real-time graphics · motion
+          </p>
+          <h1 class="index__title" data-assemble aria-label="Sean Tan">
+            <span class="index__word"><span class="index__glyph">S</span><span class="index__glyph">E</span><span class="index__glyph">A</span><span class="index__glyph">N</span></span>
+            <span class="index__word"><span class="index__glyph">T</span><span class="index__glyph">A</span><span class="index__glyph">N</span></span>
+          </h1>
+          <p class="index__lede" data-reveal>
+            I build software that feels a few years early —
+            <em>layered, precise, alive.</em> Interfaces treated as
+            instruments, where motion is how structure explains itself.
+          </p>
+          <div class="index__cue" data-reveal>
+            <span class="index__cue-rail"><span class="index__cue-fill"></span></span>
+            <span class="index__cue-text">Scroll to enter</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ░░ 02 — APPROACH ░░ Interaction: cinematic line-by-line depth reveal on scroll -->
+      <section
+        class="section section--approach"
+        id="approach"
+        data-section="APPROACH"
+        data-index="02"
+      >
+        <header class="approach__head">
+          <span class="tag" data-reveal>02 — Approach</span>
+        </header>
+        <div class="approach__script">
+          <p class="approach__line" data-line>
+            I build interfaces as <span class="hl">instruments</span>.
+          </p>
+          <p class="approach__line" data-line>
+            Motion is not decoration. It is how a system
+            <span class="hl">explains itself</span> — hierarchy, cause, consequence.
+          </p>
+          <p class="approach__line" data-line>
+            Depth over flatness. <span class="hl">Restraint</span> over spectacle.
+            Every layer deliberate.
+          </p>
+          <p class="approach__line" data-line>
+            The result should read as software crafted
+            <span class="hl">several years ahead</span> of its moment.
+          </p>
+        </div>
+      </section>
+
+      <!-- ░░ 03 — SYSTEMS ░░ Interaction: magnetic instrument list, focus-pull detail in place -->
+      <section
+        class="section section--systems"
+        id="systems"
+        data-section="SYSTEMS"
+        data-index="03"
+      >
+        <header class="systems__head">
+          <span class="tag" data-reveal>03 — Systems</span>
+          <h2 class="systems__title" data-reveal>What I engineer</h2>
+        </header>
+        <ul class="systems__list" data-magnetic-list>
+          <li class="disc" data-disc>
+            <button class="disc__row" type="button" aria-expanded="false" aria-controls="disc-1">
+              <span class="disc__idx">/01</span>
+              <span class="disc__name">Interface&nbsp;engineering</span>
+              <span class="disc__meta">TS · WebGL · Canvas</span>
+              <span class="disc__plus" aria-hidden="true"></span>
+            </button>
+            <div class="disc__body" id="disc-1" role="region">
+              <p>
+                Production front-ends where the interaction model is the product.
+                Type-safe, framework-honest, tuned to the frame budget — no jank,
+                no layout thrash, no hover-only affordances.
+              </p>
+            </div>
+          </li>
+          <li class="disc" data-disc>
+            <button class="disc__row" type="button" aria-expanded="false" aria-controls="disc-2">
+              <span class="disc__idx">/02</span>
+              <span class="disc__name">Motion&nbsp;&amp;&nbsp;interaction</span>
+              <span class="disc__meta">GSAP · Lenis · WAAPI</span>
+              <span class="disc__plus" aria-hidden="true"></span>
+            </button>
+            <div class="disc__body" id="disc-2" role="region">
+              <p>
+                Choreography with intent — cinematic transitions, purposeful
+                parallax, cursor physics. Reduced-motion is first-class, never an
+                afterthought bolted on at the end.
+              </p>
+            </div>
+          </li>
+          <li class="disc" data-disc>
+            <button class="disc__row" type="button" aria-expanded="false" aria-controls="disc-3">
+              <span class="disc__idx">/03</span>
+              <span class="disc__name">Real-time&nbsp;graphics</span>
+              <span class="disc__meta">GLSL · Shaders · GPU</span>
+              <span class="disc__plus" aria-hidden="true"></span>
+            </button>
+            <div class="disc__body" id="disc-3" role="region">
+              <p>
+                Fragment shaders and generative fields that stay ambient, not
+                loud — depth, light, and grain composed to sit behind an interface
+                without ever competing with it.
+              </p>
+            </div>
+          </li>
+          <li class="disc" data-disc>
+            <button class="disc__row" type="button" aria-expanded="false" aria-controls="disc-4">
+              <span class="disc__idx">/04</span>
+              <span class="disc__name">Design&nbsp;systems</span>
+              <span class="disc__meta">Tokens · A11y · Craft</span>
+              <span class="disc__plus" aria-hidden="true"></span>
+            </button>
+            <div class="disc__body" id="disc-4" role="region">
+              <p>
+                Reusable primitives that compound — OKLCH token systems, honest
+                contrast, keyboard paths that actually work. Systems so the next
+                idea is faster than the last.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ░░ 04 — CONTACT ░░ Interaction: cursor-reactive transmit endpoint -->
+      <section
+        class="section section--contact"
+        id="contact"
+        data-section="CONTACT"
+        data-index="04"
+      >
+        <div class="contact__inner">
+          <span class="tag" data-reveal>04 — Signal out</span>
+          <h2 class="contact__title" data-reveal>
+            Open a<br /><span class="contact__title-strong" data-transmit>channel</span>
+          </h2>
+          <p class="contact__lede" data-reveal>
+            Working on something that should feel a few years early?
+            The line is open.
+          </p>
+          <div class="contact__links" data-reveal>
+            <a class="link" href="mailto:seantan1710@gmail.com" data-cursor="transmit">
+              <span class="link__label">Email</span>
+              <span class="link__value">seantan1710@gmail.com</span>
+              <span class="link__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="link" href="https://github.com/seantanjx" target="_blank" rel="noreferrer" data-cursor="open">
+              <span class="link__label">GitHub</span>
+              <span class="link__value">github.com/seantanjx</span>
+              <span class="link__arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <footer class="footer">
+          <span>© <span data-year>2026</span> Sean Tan</span>
+          <span class="footer__mid">Built as a living lab — Vite · TypeScript · GLSL</span>
+          <span data-hud-coords-mirror>50.000°N</span>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

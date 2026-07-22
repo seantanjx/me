@@ -1,0 +1,9 @@
+/* Font faces (self-hosted via fontsource — no external requests) */
+@import "@fontsource-variable/archivo/index.css";
+@import "@fontsource-variable/martian-mono/index.css";
+
+/* Design system, in cascade order */
+@import "./tokens.css";
+@import "./base.css";
+@import "./hud.css";
+@import "./sections.css";
