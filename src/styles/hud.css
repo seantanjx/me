@@ -77,13 +77,21 @@
   color: var(--faint);
 }
 
-/* Scroll-progress rail, centered on the bottom edge */
+/* Scroll-progress gauge, centered on the bottom edge: hairline rail + live
+   numeric readout. Anchored to the HUD so it reads real progress at any scroll
+   position (a value in the footer would only ever be seen at ~100%). */
 .hud__progress {
   position: absolute;
-  bottom: clamp(0.95rem, 2.2vw, 1.65rem);
+  bottom: clamp(0.9rem, 2.2vw, 1.6rem);
   left: 50%;
   translate: -50% 0;
-  width: min(34vw, 260px);
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+}
+.hud__progress-rail {
+  position: relative;
+  width: min(28vw, 220px);
   height: 1px;
   background: var(--line-soft);
   overflow: hidden;
@@ -94,6 +102,12 @@
   transform-origin: left center;
   scale: 0 1;
   background: linear-gradient(90deg, var(--signal-deep), var(--signal));
+}
+.hud__progress-val {
+  min-width: 3.5ch;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 640px) {

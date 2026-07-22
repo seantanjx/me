@@ -37,7 +37,7 @@
       </div>
       <div class="hud__mark hud__mark--status">
         <span class="hud__live"></span>
-        <span data-hud-clock>--:--:-- UTC</span>
+        <span data-hud-clock>--:--:-- SGT</span>
       </div>
       <div class="hud__mark hud__mark--section">
         <span data-hud-index>01</span><span class="hud__dim"> / 04</span>
@@ -47,7 +47,10 @@
         <span data-hud-coords>X 000 · Y 000</span>
       </div>
       <div class="hud__progress" aria-hidden="true">
-        <span class="hud__progress-bar" data-hud-progress></span>
+        <span class="hud__progress-rail">
+          <span class="hud__progress-bar" data-hud-progress></span>
+        </span>
+        <span class="hud__progress-val" data-hud-progress-val>000%</span>
       </div>
     </div>
 
@@ -218,7 +221,7 @@
         <footer class="footer">
           <span>© <span data-year>2026</span> Sean Tan</span>
           <span class="footer__mid">Built as a living lab — Vite · TypeScript · GLSL</span>
-          <span data-hud-coords-mirror>50.000°N</span>
+          <span class="footer__geo">1.3521° N · 103.8198° E</span>
         </footer>
       </section>
     </main>

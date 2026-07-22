@@ -8,22 +8,26 @@ import type { Scroller } from "./smooth";
 export function initHud(scroller: Scroller): void {
   const clockEl = $("[data-hud-clock]");
   const coordsEl = $("[data-hud-coords]");
-  const coordsMirror = $("[data-hud-coords-mirror]");
   const progressEl = $("[data-hud-progress]");
+  const progressVal = $("[data-hud-progress-val]");
   const indexEl = $("[data-hud-index]");
   const sectionEl = $("[data-hud-section]");
   const yearEl = $("[data-year]");
 
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  // Live UTC clock
+  // Live Singapore clock (SGT, UTC+8, no DST) via the IANA time zone so it
+  // stays correct regardless of the viewer's own locale.
+  const sgtTime = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Singapore",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
   const tick = (): void => {
     if (!clockEl) return;
-    const d = new Date();
-    const p = (n: number): string => String(n).padStart(2, "0");
-    clockEl.textContent = `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(
-      d.getUTCSeconds(),
-    )} UTC`;
+    clockEl.textContent = `${sgtTime.format(new Date())} SGT`;
   };
   tick();
   setInterval(tick, 1000);
@@ -40,11 +44,11 @@ export function initHud(scroller: Scroller): void {
     { passive: true },
   );
 
-  // Scroll progress
+  // Scroll progress — rail fill + anchored numeric readout in the HUD
   scroller.onScroll((progress) => {
     if (progressEl) progressEl.style.scale = `${progress.toFixed(4)} 1`;
-    if (coordsMirror)
-      coordsMirror.textContent = `${(progress * 100).toFixed(1)}% TRAVERSED`;
+    if (progressVal)
+      progressVal.textContent = `${String(Math.round(progress * 100)).padStart(3, "0")}%`;
   });
 
   // Active-section readout
