@@ -89,9 +89,13 @@
   align-items: center;
   gap: 1ch;
 }
+.hud__progress-label {
+  color: var(--faint);
+  letter-spacing: 0.16em;
+}
 .hud__progress-rail {
   position: relative;
-  width: min(28vw, 220px);
+  width: min(22vw, 180px);
   height: 1px;
   background: var(--line-soft);
   overflow: hidden;
