@@ -1,21 +1,21 @@
 ---
-name: Sean Tan — The Instrument
-description: A dark-native personal site built as a living instrument — luminous signal-green light on a deep field, precise HUD chrome, layered motion.
+name: Sean Tan — The Observatory
+description: A dark-native personal site conceived as a night observatory — warm amber instrument light glowing under a cool indigo night sky, a starfield behind precise HUD chrome, layered motion.
 colors:
-  signal: "oklch(0.82 0.17 142)"
-  signal-bright: "oklch(0.90 0.19 140)"
-  signal-deep: "oklch(0.62 0.15 145)"
-  bone: "oklch(0.92 0.035 92)"
-  bg: "oklch(0.09 0 0)"
-  bg-deep: "oklch(0.055 0 0)"
-  surface: "oklch(0.13 0.006 150)"
-  surface-2: "oklch(0.17 0.008 150)"
-  ink: "oklch(0.95 0.008 150)"
-  ink-dim: "oklch(0.82 0.01 150)"
-  muted: "oklch(0.64 0.015 150)"
-  faint: "oklch(0.58 0.012 150)"
-  line: "oklch(0.28 0.01 150 / 0.7)"
-  line-soft: "oklch(0.28 0.01 150 / 0.32)"
+  signal: "oklch(0.8 0.13 68)"
+  signal-bright: "oklch(0.87 0.15 74)"
+  signal-deep: "oklch(0.62 0.12 58)"
+  starlight: "oklch(0.86 0.075 232)"
+  bg: "oklch(0.11 0.022 265)"
+  bg-deep: "oklch(0.07 0.018 265)"
+  surface: "oklch(0.15 0.022 265)"
+  surface-2: "oklch(0.19 0.024 265)"
+  ink: "oklch(0.95 0.012 85)"
+  ink-dim: "oklch(0.83 0.016 80)"
+  muted: "oklch(0.67 0.02 74)"
+  faint: "oklch(0.62 0.021 70)"
+  line: "oklch(0.42 0.02 258 / 0.6)"
+  line-soft: "oklch(0.42 0.02 258 / 0.28)"
 typography:
   display:
     fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
@@ -73,87 +73,105 @@ components:
     padding: "1.9rem 0"
 ---
 
-# Design System: Sean Tan — The Instrument
+# Design System: Sean Tan — The Observatory
 
 ## 1. Overview
 
-**Creative North Star: "The Instrument"**
+**Creative North Star: "The Observatory"**
 
-This is a personal site conceived as a living instrument — not a page you read,
-a panel you operate. A luminous signal-green reads like transmission light
-against a deep, near-black field; a persistent HUD frame (hairline corner
-brackets, a live UTC clock, pointer coordinates, a section readout, a
+This is a personal site conceived as a night observatory — not a page you read,
+an instrument you look *through*. A warm amber light glows like a sodium desk
+lamp against a deep, cool indigo night sky; a faint starfield and slow nebula
+haze recede behind the content, and a persistent HUD frame (hairline corner
+brackets, a live SGT clock, an azimuth/altitude readout, a section readout, a
 scroll-progress rail) wraps every screen so the whole experience is seen through
-one lens. Depth is the organizing idea: layered translucent planes, a receding
-WebGL signal field, and cursor-aware parallax give the interface z-axis without
-ever fighting the content. Motion is structural — one orchestrated page-load,
-line-by-line reveals, magnetic focus-pulls — never decorative flash.
+one lens. Depth is the organizing idea: the layered WebGL sky, translucent HUD
+chrome, and cursor-aware parallax give the interface z-axis without ever fighting
+the content. Motion is structural — one orchestrated page-load, line-by-line
+reveals, magnetic focus-pulls, a cursor that moves like a handheld lamp — never
+decorative flash.
 
-The system is dark by nature, not by fashion. The mood is an aerospace / signals
-console at night: cold precision, a single warm-cool tension between the green
-signal and a bone highlight, quiet until you touch it. It is unapologetically a
-demonstration of craft — the execution *is* the message — so restraint and
-polish outrank spectacle at every turn.
+The system is dark by nature, not by fashion, but its temperature is **warm-led**:
+the mood is an astronomer's warm-lit desk under a cold sky. The core tension is a
+single warm-cool axis — warm amber instrument light (the observer, *you*) against
+cool starlight and the indigo sky (the distant, the cosmos). It is unapologetically
+a demonstration of craft — the execution *is* the message — so restraint and
+polish outrank spectacle at every turn. The warmth is carried by *light
+temperature*, not by tinting the surface toward cream.
 
 It explicitly rejects the generic SaaS look (rounded-card grids, purple
-gradients, hero-metric templates), the warm cream / lifestyle-minimal aesthetic,
-corporate stock-photo blandness, and over-animated scroll-jacking. Ambition here
-means *complexity and layering executed with control*, not more movement.
+gradients, hero-metric templates), the warm cream / lifestyle-minimal aesthetic
+(sand backgrounds, serif headers), corporate stock-photo blandness, and
+over-animated scroll-jacking. Ambition here means *complexity and layering
+executed with control*, not more movement.
 
 **Key Characteristics:**
-- Dark-native field (near-black, chroma 0) with one committed signal-green voice
+- Dark-native indigo night-sky field (faint cool chroma) with one committed warm
+  amber signal voice — the temperature is inverted from a cold console: warm leads
 - A persistent HUD/instrument frame as the cohesion device across all sections
-- Depth through layering: WebGL field + translucent planes + pointer parallax
+- Depth through layering: WebGL starfield + nebula haze + warm cursor-lamp glow
 - Structural motion with a first-class `prefers-reduced-motion` fallback
 - Sans display (Archivo) paired with a mono instrument voice (Martian Mono)
 - OKLCH throughout; contrast verified to WCAG AA against the shipped dark theme
 
 ## 2. Colors
 
-A monochrome-dark field carrying a single luminous green voice, with a bone
-highlight held in reserve as the one warm note.
+A cool indigo night sky carrying a single warm amber voice, with a cool starlight
+highlight held in reserve as the one distant note. The temperature relationship is
+**inverted** from a typical dark console: warmth is the lead, coolness the accent.
 
 ### Primary
-- **Lichen Glow** (`oklch(0.82 0.17 142)`): The signal color. Transmission
-  light — used for the HUD live-dot and readouts, section tags, the emphasized
-  words in prose, link labels and arrows, the disclosure `+` marks, and the one
-  filled CTA (the skip link). It glows against the dark; it is never a large
-  fill behind body text.
-- **Lichen Glow Bright** (`oklch(0.90 0.19 140)`): A hotter step for the tightest
-  highlights and the core of the WebGL field's cursor glow.
-- **Lichen Glow Deep** (`oklch(0.62 0.15 145)`): The recessed step — gradient
-  tails on the progress rail, the scrollbar thumb, deep field structure.
+- **Ember** (`oklch(0.8 0.13 68)`): The signal color. Warm instrument light —
+  used for the HUD live-dot and readouts, section tags, the emphasized words in
+  prose, link labels and arrows, the disclosure `+` marks, and the one filled
+  CTA (the skip link). It glows against the dark; it is never a large fill behind
+  body text.
+- **Ember Bright** (`oklch(0.87 0.15 74)`): A hotter step for the tightest
+  highlights and the core of the WebGL field's cursor-lamp glow.
+- **Ember Deep** (`oklch(0.62 0.12 58)`): The recessed step — gradient tails on
+  the progress rail, the scrollbar thumb, deep field structure.
 
 ### Secondary
-- **Bone** (`oklch(0.92 0.035 92)`): The single warm highlight, held in reserve
-  as counter-tension to the cold green. A rare accent, never a surface.
+- **Starlight** (`oklch(0.86 0.075 232)`): The single cool highlight, held in
+  reserve as counter-tension to the warm ember — distance, cosmos, the far sky.
+  A rare accent, never a surface. (Inverse role of the old "bone"; `--bone`
+  remains as a back-compat alias pointing here.)
 
 ### Neutral
-- **Field** (`oklch(0.09 0 0)`): The body background. Near-black at chroma 0 —
-  no hidden warmth. The canvas the signal glows on.
-- **Field Deep** (`oklch(0.055 0 0)`): The darkest step; text color on filled
-  signal elements, deepest vignette.
-- **Surface / Surface-2** (`oklch(0.13 0.006 150)` / `oklch(0.17 0.008 150)`):
-  Barely-tinted panels for any raised material. Same hue family as the field.
-- **Ink** (`oklch(0.95 0.008 150)`): Primary text — headings, the hero name,
-  lit prose. 17.9:1 on Field.
-- **Ink Dim** (`oklch(0.82 0.01 150)`): Secondary prose (ledes, link values).
-  11.9:1 on Field.
-- **Muted** (`oklch(0.64 0.015 150)`): Tertiary text — resting disclosure
-  titles, HUD section label. 6.2:1 on Field.
-- **Faint** (`oklch(0.58 0.012 150)`): Instrument-dim metadata — footer, HUD
-  coordinates, capability meta tags. The floor: 4.86:1 on Field, still AA.
-- **Line / Line-soft** (`oklch(0.28 0.01 150 / 0.7)` / `/ 0.32`): Hairline
+- **Field** (`oklch(0.11 0.022 265)`): The body background. Deep indigo night —
+  a *faint* cool chroma, not pure black, so the warm light reads warmer by
+  contrast. The sky the ember glows against.
+- **Field Deep** (`oklch(0.07 0.018 265)`): The darkest step; text color on
+  filled signal elements, deepest vignette.
+- **Surface / Surface-2** (`oklch(0.15 0.022 265)` / `oklch(0.19 0.024 265)`):
+  Cool night panels for any raised material. Same indigo hue family as the field.
+- **Ink** (`oklch(0.95 0.012 85)`): Primary text — headings, the hero name, lit
+  prose. Warm candlelit off-white. ~16.5:1 on Field.
+- **Ink Dim** (`oklch(0.83 0.016 80)`): Secondary prose (ledes, link values).
+  ~11:1 on Field.
+- **Muted** (`oklch(0.67 0.02 74)`): Tertiary text — resting disclosure titles,
+  HUD section label. ~6.5:1 on Field.
+- **Faint** (`oklch(0.62 0.021 70)`): Instrument-dim metadata — footer, HUD
+  coordinates, meta tags. The floor: ~5.2:1 on Field, still AA.
+- **Line / Line-soft** (`oklch(0.42 0.02 258 / 0.6)` / `/ 0.28`): Hairline
   borders, dividers, HUD corner brackets.
 
 ### Named Rules
-**The Signal-Is-Light Rule.** Lichen Glow is treated as emitted light, not
-paint: glow, hairline, small mark, single word, one filled control. It never
-becomes a large fill behind text. Its rarity is what makes it read as signal.
+**The Signal-Is-Light Rule.** Ember is treated as emitted light, not paint:
+glow, hairline, small mark, single word, one filled control. It never becomes a
+large fill behind text. Its rarity is what makes it read as warm signal.
 
-**The Chroma-Zero Field Rule.** The background is pure neutral (chroma 0). Warmth
-lives only in the Bone accent and the green's own hue — never tinted into the
-surface. A warm-tinted dark bg would make this the AI-default dark theme.
+**The Warm-Led-Temperature Rule.** Warmth is the lead voice and coolness the
+reserved accent — the inverse of a cold console. The warmth lives in the ember
+light, the candlelit ink, and the cursor-lamp; the coolness lives in the indigo
+sky and the rare starlight. Never invert this back to a green/cold lead, and
+never carry warmth by tinting the surface toward cream/sand — that would trade
+the observatory for the AI-default warm-minimal theme.
+
+**The Night-Sky Field Rule.** The background is a deep indigo with only a *faint*
+cool chroma (~0.02) — enough to read as night sky rather than a neutral void, not
+enough to become a colored panel. Warmth is never tinted into the surface; it is
+emitted by the ember light on top of the cool field.
 
 ## 3. Typography
 
@@ -170,7 +188,7 @@ labeling*, never as page body.
 - **Display** (800, `clamp(3.4rem … 9.5rem)`, lh 0.86, ls -0.04em): The hero
   name only. Set in solid Ink; emphasis is size and weight, never gradient.
 - **Headline** (700–800, `clamp(2.2rem … 4rem)`, lh 1): Section titles and the
-  contact statement. The contact keyword sits in Lichen Glow.
+  contact statement. The contact keyword sits in Ember.
 - **Title** (500–650, `clamp(1.2rem … 2.6rem)`): Disclosure names, link values,
   the hero lede.
 - **Body** (400, `clamp(0.95rem … 1.075rem)`, lh 1.5): Prose. Measure capped
@@ -193,8 +211,8 @@ Flat by default; there are no drop shadows anywhere. Depth is conveyed
 *optically*, not with box-shadows: an ambient WebGL signal field with a receding
 horizon and a soft cursor glow, translucent HUD chrome layered over content, and
 pointer/scroll parallax that moves layers at different rates. "Elevation" here is
-z-position in a rendered scene, not a Material shadow ramp. Light — the green
-glow and the field's luminance — is the only elevation material.
+z-position in a rendered scene, not a Material shadow ramp. Light — the warm
+ember glow and the field's luminance — is the only elevation material.
 
 ### Named Rules
 **The No-Shadow Rule.** Box-shadows are prohibited. If an element needs to feel
@@ -212,27 +230,27 @@ interaction. Every interactive element has a real `:focus-visible` path and a
 ### Buttons
 - **Shape:** Near-square (3px radius). Rounded corners are almost absent by
   design — this is instrument chrome, not app UI.
-- **Primary (the skip link / filled CTA):** Lichen Glow fill, Field-Deep text,
-  mono label, `0.6rem 1rem` padding. The only place green is a fill.
-- **Hover / Focus:** 2px Lichen Glow focus ring at 3px offset, system-wide.
+- **Primary (the skip link / filled CTA):** Ember fill, Field-Deep text,
+  mono label, `0.6rem 1rem` padding. The only place ember is a fill.
+- **Hover / Focus:** 2px Ember focus ring at 3px offset, system-wide.
   Motion uses the shared ease-out curves; no bounce, no elastic.
 
 ### Links (Contact rows)
-- **Style:** Full-width rows on a hairline grid — mono Lichen Glow label, Ink-Dim
-  value, Lichen Glow arrow. No underlines.
+- **Style:** Full-width rows on a hairline grid — mono Ember label, Ink-Dim
+  value, Ember arrow. No underlines.
 - **Hover / Focus:** Value brightens to Ink, the row insets ~0.8rem, the arrow
   translates. On fine pointers the row is also magnetic (drifts toward cursor).
 
 ### Disclosure list (Systems)
 - **Style:** An accessible `aria-expanded` accordion on hairline dividers. Row =
-  mono index (`/01`), Muted title, mono meta, a `+` toggle in Lichen Glow.
+  mono index (`/01`), Muted title, mono meta, a `+` toggle in Ember.
 - **State:** One open at a time; the body expands via `grid-template-rows: 0fr →
   1fr`. Open/hover/focus brightens the title Muted → Ink. On fine pointers the
   title drifts magnetically toward the cursor.
 
 ### HUD (signature component)
 - The persistent instrument frame: hairline corner brackets, brand mark with a
-  Lichen Glow glyph, a pulsing live-dot + live UTC clock, a section readout
+  Ember glyph, a pulsing live-dot + live UTC clock, a section readout
   (`02 / 04 APPROACH`) driven by a viewport-center IntersectionObserver, pointer
   coordinates, and a centered scroll-progress rail. Fixed, `pointer-events:
   none`, mono throughout. Coordinates and progress rail hide below 640px.
@@ -242,22 +260,24 @@ interaction. Every interactive element has a real `:focus-visible` path and a
   pointers only; hidden for touch and reduced-motion, where the native cursor
   returns. Enhancement, never required for function.
 
-### Ambient signal field (signature component)
-- A full-screen raw-WebGL/GLSL fragment shader: layered flow noise, receding
-  depth lines, and a cursor-reactive glow, tinted Lichen Glow, masked by a radial
-  vignette so the center stays legible. Restrained by mandate — atmosphere, not
-  screensaver. Reduced-motion draws one static frame; no-WebGL degrades to the
-  CSS field + grain.
+### Ambient night-sky field (signature component)
+- A full-screen raw-WebGL/GLSL fragment shader: a two-layer parallax **starfield**
+  (mostly cool-white, ~12% warm), a slow **nebula haze** (warm ember + cool
+  starlight fbm, center-masked so text stays legible), and a warm **cursor-lamp**
+  glow, over a deep indigo base, masked by a radial vignette. `u_scroll` drifts
+  the sky vertically so scrolling reads as panning across it. Restrained by
+  mandate — atmosphere, not screensaver. Reduced-motion draws one static frame;
+  no-WebGL degrades to the CSS field + grain.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep the field pure neutral (chroma 0) and let Lichen Glow and the Bone
-  accent carry all warmth/coolness.
-- **Do** treat Lichen Glow as light — small marks, hairlines, single words, one
+- **Do** keep the field a deep indigo night (faint cool chroma ~0.02) and let
+  the warm Ember light and candlelit Ink carry the warmth; Starlight the coolness.
+- **Do** treat Ember as light — small marks, hairlines, single words, one
   filled control. Keep it off large text backgrounds.
 - **Do** verify contrast against the shipped dark theme: body ≥4.5:1, large
-  ≥3:1. Faint (`0.58`) is the dim floor at 4.86:1 — never dim metadata further.
+  ≥3:1. Faint (`0.62`) is the dim floor at ~5.2:1 — never dim metadata further.
 - **Do** give every animation a first-class `prefers-reduced-motion` path, and
   keep content visible by default (reveals enhance, never gate).
 - **Do** reserve Martian Mono for instrumentation — readouts, tags, labels.
@@ -268,8 +288,10 @@ interaction. Every interactive element has a real `:focus-visible` path and a
   a single solid color; emphasis comes from size and weight.
 - **Don't** add box-shadows or glassmorphism-by-default — depth is optical
   (field, parallax, glow), not paper-drop-shadow.
-- **Don't** tint the background warm or cool "because the brand feels that way" —
-  that produces the AI-default dark theme.
+- **Don't** tint the background *warm* toward cream/sand — warmth is emitted by
+  the ember light on top, never baked into the surface. The field's faint *cool*
+  indigo chroma (~0.02) is deliberate and capped there; pushing it further makes
+  it a colored panel, and warming it makes it the AI-default warm-minimal theme.
 - **Don't** drift into the **generic SaaS / startup** look: rounded-card grids,
   purple gradients, the hero-metric template.
 - **Don't** go **cream / warm minimal-lifestyle** (sand backgrounds, serif

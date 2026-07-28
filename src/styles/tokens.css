@@ -1,26 +1,35 @@
 /* ══════════════════════════════════════════════════════════════
-   TOKENS — the instrument's material system (OKLCH throughout)
+   TOKENS — "The Observatory": warm instrument light under a cool
+   night sky. OKLCH throughout. Temperature is inverted vs. the old
+   Instrument system — warm amber is the lead voice, cool starlight
+   is the rare reserved note, and the field carries a faint indigo
+   night tint so the warm light reads warmer by contrast.
    ══════════════════════════════════════════════════════════════ */
 :root {
-  /* — Surface & ink (dark-native) — */
-  --bg: oklch(0.09 0 0);
-  --bg-deep: oklch(0.055 0 0);
-  --surface: oklch(0.13 0.006 150);
-  --surface-2: oklch(0.17 0.008 150);
-  --line: oklch(0.28 0.01 150 / 0.7);
-  --line-soft: oklch(0.28 0.01 150 / 0.32);
+  /* — Surface & ink: deep indigo night sky (faint cool chroma, not pure black) — */
+  --bg: oklch(0.11 0.022 265);
+  --bg-deep: oklch(0.07 0.018 265);
+  --surface: oklch(0.15 0.022 265);
+  --surface-2: oklch(0.19 0.024 265);
+  --line: oklch(0.42 0.02 258 / 0.6);
+  --line-soft: oklch(0.42 0.02 258 / 0.28);
 
-  --ink: oklch(0.95 0.008 150);
-  --ink-dim: oklch(0.82 0.01 150);
-  --muted: oklch(0.64 0.015 150);
-  --faint: oklch(0.58 0.012 150); /* instrument-dim, still AA (4.86:1 on bg) */
+  /* Warm, candlelit ink — reads lit-by-lamp, not clinical. All AA on --bg. */
+  --ink: oklch(0.95 0.012 85); /* 16.5:1 on bg */
+  --ink-dim: oklch(0.83 0.016 80); /* 11.0:1 */
+  --muted: oklch(0.67 0.02 74); /* 6.5:1 */
+  --faint: oklch(0.62 0.021 70); /* instrument-dim floor, still AA (5.2:1) */
 
-  /* — Brand voice: signal-green light + bone highlight — */
-  --signal: oklch(0.82 0.17 142);
-  --signal-bright: oklch(0.9 0.19 140);
-  --signal-deep: oklch(0.62 0.15 145);
-  --signal-glow: oklch(0.82 0.17 142 / 0.55);
-  --bone: oklch(0.92 0.035 92);
+  /* — Brand voice: warm amber signal light + cool starlight highlight — */
+  --signal: oklch(0.8 0.13 68); /* ember/sodium-lamp warm — the lead voice */
+  --signal-bright: oklch(0.87 0.15 74); /* hotter tip for tightest highlights */
+  --signal-deep: oklch(0.62 0.12 58); /* recessed step — rails, thumb, deep field */
+  --signal-glow: oklch(0.8 0.13 68 / 0.55);
+
+  /* Cool starlight — the single reserved cold note, inverse of the old bone.
+     Distance, cosmos, the far sky. A rare accent, never a surface. */
+  --starlight: oklch(0.86 0.075 232);
+  --bone: var(--starlight); /* back-compat alias; the reserved accent is now cool */
 
   /* — Typography — */
   --font-display: "Archivo Variable", "Archivo", system-ui, sans-serif;

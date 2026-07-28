@@ -2,10 +2,10 @@ import { clamp, lerp, prefersReducedMotion } from "./utils";
 import type { Scroller } from "./smooth";
 
 /**
- * Ambient "signal field" — a full-screen fragment shader that sits behind the
- * interface. Layered flow noise + a receding grid + a cursor-reactive glow,
- * tinted with the brand signal-green. Deliberately quiet: it reads as depth and
- * light, not a screensaver.
+ * Ambient "observatory field" — a full-screen fragment shader that reads as a
+ * deep night sky observed. Sparse starfield, soft nebula haze in warm amber and
+ * cool starlight, a warm cursor lamp glow, and a radial vignette keeping the
+ * center legible. Scroll pans the sky vertically; pointer applies parallax.
  *
  * Reduced-motion: a single static frame is drawn and the loop never starts.
  * Also pauses when the tab is hidden. Falls back gracefully if WebGL is absent.
@@ -17,84 +17,149 @@ void main() { gl_Position = vec4(p, 0.0, 1.0); }
 
 const FRAG = `
 precision highp float;
-uniform vec2 u_res;
+uniform vec2  u_res;
 uniform float u_time;
-uniform vec2 u_pointer;   // 0..1, eased
-uniform float u_scroll;   // 0..1
+uniform vec2  u_pointer;   // 0..1, eased
+uniform float u_scroll;    // 0..1
 uniform float u_dpr;
 
-// — hash / value-noise / fbm —
-float hash(vec2 p) {
-  p = fract(p * vec2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
+// --- Hash functions ---
+float hash21(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
 }
-float noise(vec2 p) {
+
+vec2 hash22(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.xx + p3.yz) * p3.zy);
+}
+
+// --- Value noise for nebula ---
+float vnoise(vec2 p) {
   vec2 i = floor(p);
   vec2 f = fract(p);
   vec2 u = f * f * (3.0 - 2.0 * f);
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
+  float a = hash21(i);
+  float b = hash21(i + vec2(1.0, 0.0));
+  float c = hash21(i + vec2(0.0, 1.0));
+  float d = hash21(i + vec2(1.0, 1.0));
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
+
 float fbm(vec2 p) {
   float v = 0.0;
   float a = 0.5;
-  for (int i = 0; i < 5; i++) {
-    v += a * noise(p);
-    p *= 2.02;
-    a *= 0.5;
+  for (int i = 0; i < 4; i++) {
+    v += a * vnoise(p);
+    p  *= 2.07;
+    a  *= 0.48;
   }
   return v;
 }
 
+// --- Sparse starfield layer ---
+// Returns vec2(brightness, warmth). ~20 % of cells hold a star.
+// seed offsets the hash domain so two layers don't overlap.
+vec2 starLayer(vec2 uv, float scale, float t, float seed) {
+  float ar    = u_res.x / u_res.y;
+  vec2  scaled = vec2(uv.x * ar, uv.y) * scale;
+  vec2  cell   = floor(scaled);
+  vec2  off    = fract(scaled);
+
+  float brite = 0.0;
+  float warm  = 0.0;
+
+  for (int dy = -1; dy <= 1; dy++) {
+    for (int dx = -1; dx <= 1; dx++) {
+      vec2 nc = cell + vec2(float(dx), float(dy));
+      vec2 h  = hash22(nc + seed);
+
+      // Gate: step(0.80, h.x) => ~20 % of cells get a star
+      float hasStar = step(0.80, h.x);
+
+      vec2  starOff = vec2(float(dx), float(dy)) + h;
+      float dist    = length(off - starOff);
+      float r       = 0.036 + h.y * 0.040;         // radius in cell units
+      float b       = (1.0 - smoothstep(0.0, r, dist)) * hasStar;
+      b = b * b;                                    // sharpen falloff
+
+      // Very slow twinkling — not a disco
+      float twinkle = 0.87 + 0.13 * sin(t * 0.44 + h.x * 19.1 + seed * 4.7);
+      b *= twinkle * (0.45 + h.y * 0.55);          // per-star brightness spread
+
+      // ~12 % of stars are warm-tinted
+      float w = step(0.88, hash21(nc + seed + 3.1)) * b;
+
+      brite += b;
+      warm  += w;
+    }
+  }
+  return vec2(clamp(brite, 0.0, 1.0), clamp(warm, 0.0, 1.0));
+}
+
 void main() {
-  vec2 uv = gl_FragCoord.xy / u_res.xy;
-  vec2 p = (gl_FragCoord.xy - 0.5 * u_res.xy) / u_res.y;
+  vec2  uv  = gl_FragCoord.xy / u_res.xy;
+  vec2  p   = (gl_FragCoord.xy - 0.5 * u_res.xy) / u_res.y;  // aspect-corrected
 
-  float t = u_time * 0.028;
-  vec2 par = (u_pointer - 0.5) * 0.28;      // pointer parallax
-  float sc = u_scroll;
+  float t        = u_time;
+  vec2  par      = u_pointer - 0.5;    // -0.5..0.5
+  float skyDrift = u_scroll * 0.20;   // scroll pans sky upward
 
-  // — flowing layered structure (advected fbm) —
-  vec2 q = p * 1.55 + par;
-  q.y += sc * 0.6;
-  float flow = fbm(q + vec2(t, -t * 0.6));
-  float flow2 = fbm(q * 2.1 - vec2(t * 0.7, t) + flow);
-  float structure = smoothstep(0.42, 0.98, flow * 0.7 + flow2 * 0.5);
+  // --- Palette ---
+  vec3 bgCol    = vec3(0.028, 0.030, 0.055);  // deep indigo night
+  vec3 amber    = vec3(0.95,  0.62,  0.32);   // warm amber (lead voice)
+  vec3 coolStar = vec3(0.88,  0.92,  1.00);   // cool-white starlight
+  vec3 warmStar = vec3(1.00,  0.84,  0.60);   // warm amber star tint
 
-  // — receding depth lines only (horizon floor + ceiling).
-  //   Deliberately no vertical radials: the starburst reads retro-gaming,
-  //   not luxury. Horizontal recession alone gives quiet, premium depth. —
-  vec2 g = p + par * 0.5;
-  g.y += sc * 0.4;
-  float persp = 1.0 / (abs(g.y) * 4.4 + 0.55);
-  float rows = abs(fract(g.y * persp * 7.0) - 0.5);
-  float line = smoothstep(0.47, 0.5, rows);
-  float gridFade = smoothstep(1.5, 0.05, abs(g.y)) * 0.05;
+  vec3 col = bgCol;
 
-  // — cursor glow (soft, tight light source) —
-  vec2 ptr = (u_pointer - 0.5) * vec2(u_res.x / u_res.y, 1.0);
-  float d = length(p - ptr);
-  float glow = exp(-d * 4.4) * 0.26;
+  // --- Nebula haze (low-frequency fbm, drifting slowly) ---
+  vec2  nebP = p * 0.62;
+  nebP.y    -= skyDrift * 0.55;
+  nebP      += par * 0.055;
+  float ts   = t * 0.008;
+  float n1   = fbm(nebP + vec2(ts, -ts * 0.75));
+  float n2   = fbm(nebP * 1.85 - vec2(ts * 0.9, ts * 1.3) + n1 * 0.30);
 
-  // — compose (all intensities restrained; the field is atmosphere) —
-  vec3 base = vec3(0.017, 0.026, 0.021);        // near-black field
-  vec3 signal = vec3(0.36, 0.86, 0.44);         // signal-green light
-  vec3 col = base;
-  col += signal * structure * 0.095;
-  col += signal * line * gridFade;
-  col += signal * glow;
+  // Soft radial mask: suppress nebula at center so text stays legible
+  float nebMask = smoothstep(0.18, 0.65, length(p * vec2(0.65, 1.0)));
 
-  // depth vignette + faint breathing
-  float vig = smoothstep(1.3, 0.1, length(p));
-  col *= mix(0.5, 1.0, vig);
-  col += signal * 0.010 * (0.5 + 0.5 * sin(u_time * 0.4));
+  col += amber               * smoothstep(0.50, 0.82, n1 * 0.55 + n2 * 0.45) * 0.040 * nebMask;
+  col += vec3(0.50, 0.62, 0.85) * smoothstep(0.52, 0.84, n2 * 0.62 + n1 * 0.38) * 0.022 * nebMask;
 
-  // subtle filmic curve
-  col = col / (col + 0.6);
+  // --- Starfield — two depth layers for parallax ---
+  // Far layer: finer cells, cool-white, gentle parallax
+  vec2 uvFar  = uv + par * 0.025;
+  uvFar.y    -= skyDrift;
+  vec2 sF     = starLayer(uvFar, 15.0, t, 0.0);
+  col += coolStar * sF.x * 0.72;
+  col += warmStar * sF.y * 1.10;
+
+  // Near layer: coarser cells, slightly warmer, more parallax
+  vec2 uvNear  = uv + par * 0.055;
+  uvNear.y    -= skyDrift * 1.35;
+  vec2 sN      = starLayer(uvNear, 22.0, t, 6.74);
+  col += coolStar * sN.x * 0.52;
+  col += warmStar * sN.y * 0.85;
+
+  // --- Cursor glow (warm amber lamp — the observer's light) ---
+  vec2  ptr  = (u_pointer - 0.5) * vec2(u_res.x / u_res.y, 1.0);
+  float dPtr = length(p - ptr);
+  float glow = exp(-dPtr * 4.4) * 0.21;
+  col += amber * glow;
+
+  // --- Radial vignette — edges darker, center preserved ---
+  float vig = smoothstep(1.22, 0.05, length(p));
+  col *= mix(0.30, 1.0, vig);
+
+  // Faint slow breathing
+  col += bgCol * 0.012 * (0.5 + 0.5 * sin(t * 0.31));
+
+  // --- Filmic tonemap ---
+  col = col / (col + 0.55);
+
   gl_FragColor = vec4(col, 1.0);
 }
 `;

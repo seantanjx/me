@@ -39,7 +39,7 @@ export function initHud(scroller: Scroller): void {
       if (!coordsEl) return;
       const x = String(Math.round(e.clientX)).padStart(3, "0");
       const y = String(Math.round(e.clientY)).padStart(3, "0");
-      coordsEl.textContent = `X ${x} · Y ${y}`;
+      coordsEl.textContent = `AZ ${x} · ALT ${y}`;
     },
     { passive: true },
   );
