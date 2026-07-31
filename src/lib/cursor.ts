@@ -25,7 +25,7 @@ export function initCursor(): void {
     (e) => {
       target.x = e.clientX;
       target.y = e.clientY;
-      dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      dot.style.translate = `${e.clientX}px ${e.clientY}px`;
     },
     { passive: true },
   );
@@ -34,7 +34,7 @@ export function initCursor(): void {
     const t = reduced ? 1 : 0.18;
     ringPos.x = lerp(ringPos.x, target.x, t);
     ringPos.y = lerp(ringPos.y, target.y, t);
-    ring.style.transform = `translate(${ringPos.x}px, ${ringPos.y}px)`;
+    ring.style.translate = `${ringPos.x}px ${ringPos.y}px`;
     requestAnimationFrame(render);
   };
   requestAnimationFrame(render);
